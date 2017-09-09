@@ -8,12 +8,11 @@
   \/|______|_||_||_|_|     |_|_(___/ \___|_|\____)   
                                                      
 =====================================================
--->
-
-Author: Matt Mumau <mpmumau@gmail.com> )
+Author: Matt Mumau <mpmumau@gmail.com> 
 Created: August 29, 2017 )
 License: MIT License (included in LICENSE file)
 ====================================================================)
+-->
 
 # VAMPlistic
 
