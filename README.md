@@ -9,9 +9,9 @@
                                                      
 =====================================================
 Author: Matt Mumau <mpmumau@gmail.com> 
-Created: August 29, 2017 )
+Created: August 29, 2017
 License: MIT License (included in LICENSE file)
-====================================================================)
+=====================================================
 -->
 
 # VAMPlistic

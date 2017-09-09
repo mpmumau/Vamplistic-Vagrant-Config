@@ -1,11 +1,10 @@
 #
 # Vamplistic
 #
-# A Vagrant file for running a simple Apache, MySQL
-# and PHP server.
-#
+# A Vagrant file for running a simple Apache, MySQL and PHP server.
 # Type 'vagrant up' to run. See README.md for more information.
 #
+# File: Vagrantfile
 # Author: Matthew Mumau
 # Created: Aug. 27, 2017
 #
@@ -28,8 +27,8 @@ Vagrant.configure("2") do |config|
     # Provisioner
     config.vm.provision "shell" do |s|
         s.name = "Vamplistic Shell Provisioner"
-        s.path = "provision.sh"
         s.keep_color = true
+        s.path = "provision.sh"
         s.upload_path = "/tmp/vamplistic.sh"
     end
 end

@@ -1,1 +1,1 @@
-test.txt
+If you can read this, then Vamplistic is serving .txt files.
