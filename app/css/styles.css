@@ -1,0 +1,20 @@
+button {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.show-block {
+    display: block;
+}
+
+.hide-overflow {
+    overflow: hidden;
+}
+
+header {
+    margin-bottom:1.0vw;
+    padding:2vw;
+}

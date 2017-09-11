@@ -1,2 +1,5 @@
+.idea
+.vagrant
 env.sh
-config/apache2/.key
+config/apache2/*
+!config/apache2/000-default.conf
