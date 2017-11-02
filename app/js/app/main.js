@@ -4,7 +4,8 @@
     var ViewStates = {
         System: 0,
         Packages: 1,
-        Info: 2
+        Info: 2,
+        Mailcatcher: 3
     };
 
     var App = {
@@ -15,7 +16,8 @@
                 var panels = [
                     '#system-panel',
                     '#packages-panel',
-                    '#info-panel'
+                    '#info-panel',
+                    "#mailcatcher-panel"
                 ]
 
                 $.each(panels, function(key, panel) {
@@ -45,6 +47,9 @@
                     case ViewStates.Info:
                         show($("#info-panel"));
                         break;
+                    case ViewStates.Mailcatcher: 
+                        window.open("http://" + window.location.hostname + ":1080", "_blank");
+                        break;
                 };
             }
         }
@@ -63,6 +68,11 @@
     $(".info-panel").on('click', function(e) {
         e.preventDefault();
         App.View.set(ViewStates.Info);
+    });
+
+    $(".mailcatcher-panel").on('click', function(e) {
+        e.preventDefault();
+        App.View.set(ViewStates.Mailcatcher);
     });
 
     window.ViewStates = ViewStates;

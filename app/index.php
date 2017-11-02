@@ -27,13 +27,16 @@
                 </p>
             </div>
             <div class="row col-md-8">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <button type="button" class="btn btn-primary btn-lg active col-md-10 system-panel">System</button>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary btn-lg active col-md-10 mailcatcher-panel">Mailcatcher</button>
+                </div>
+                <div class="col-md-3">
                     <button type="button" class="btn btn-primary btn-lg active col-md-10 packages-panel">Packages</button>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <button type="button" class="btn btn-primary btn-lg active col-md-10 info-panel">Info</button>
                 </div>
             </div>
@@ -67,6 +70,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="panel panel-default hidden" id="mailcatcher-panel">
+            Mailcatcher panel
         </div>
 
         <div class="panel panel-default hidden" id="packages-panel">
