@@ -15,7 +15,6 @@ Vagrant.configure("2") do |config|
       virtualbox.name = "Vamplistic.dev"
     end
     config.vm.box = "debian/jessie64"
-    config.vm.box_version = "8.9.0"
 
     # Networking
     config.vm.hostname = "vamplistic.dev"
