@@ -131,10 +131,3 @@ applications) access to that database.
 
 ## Notes
 
-**Versioning** All installed packages of Vamplistic will be version locked
-to the versions specified in the `provision.sh` script. This is done by
-design, such that the most consistent possible Vagrant installation
-is attained. Philosophically, Vagrant will aim to maintain consistant
-performance by adhering only to fully tested and compatible upgrades
-to required application packages.
-
