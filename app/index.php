@@ -1,6 +1,5 @@
 <?php
     require('app.php');
-    $test = 1;
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +47,7 @@
                         <label>Operating System</label>
                     </div>
                     <div class="col-md-6">
-                        <span>TODO:INSERT</span>
+                        <span><?php echo $VAMP_SYS_INFO["os_version"]; ?></span>
                     </div>
                 </div>
                 <div class="row">
@@ -56,7 +55,7 @@
                         <label>CPU</label>
                     </div>
                     <div class="col-md-6">
-                        <span>TODO:INSERT</span>
+                        <span><?php echo $VAMP_SYS_INFO["cpu_name"]; ?> (<?php echo $VAMP_SYS_INFO["cpu_count"]; ?> cores)</span>
                     </div>
                 </div>
                 <div class="row">
@@ -64,7 +63,7 @@
                         <label>RAM</label>
                     </div>
                     <div class="col-md-6">
-                        <span>TODO:INSERT</span>
+                        <span><?php echo $VAMP_SYS_INFO["memory"]; ?> MB</span>
                     </div>
                 </div>
             </div>

@@ -48,4 +48,38 @@ function pkgsData()
     return $list;
 }
 
+function osVersion() {
+    // Get the OS version
+    $cmd = "hostnamectl | sed -n 7p";
+    $raw = shell_exec($cmd);
+    $pos = strpos($raw, ":") + 1;
+    $raw = substr($raw, $pos);
+
+    return $raw;
+}
+
+function sysCPUCount() {
+    return shell_exec("lscpu | sed -n 4p | awk '{print $2}'");
+}
+
+function sysCPUName() {
+    return shell_exec("lscpu | sed -n 13p | awk -F':' '{print $2}' | sed 's/ //g'");
+}
+
+function sysRAM() {
+    return shell_exec("free -m | sed -n 2p | awk '{print $2}'");
+}
+
+function sysInfo() {
+    $data = array(
+        "os_version" => osVersion(),
+        "cpu_name" => sysCPUName(),
+        "cpu_count" => sysCPUCount(),
+        "memory" => sysRAM()
+    );
+
+    return $data;
+}
+
 $VAMP_PKGS_DATA = pkgsData();
+$VAMP_SYS_INFO = sysInfo();
