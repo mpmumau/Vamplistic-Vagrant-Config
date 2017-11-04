@@ -9,8 +9,6 @@
 # Author: Matt Mumau <mpmumau@gmail.com>
 #
 
-# The total amount of steps in this process; used for console output.
-TOTAL_STEPS=10
 # The current step; used for console output.
 CURRENT_STEP=1
 # The subdirectory to use as the root share directory with Vagrant.
@@ -23,7 +21,7 @@ LOG_DIR=$VGRNT_DIR/logs
 # Print formatted output to the console.
 function print_status() 
 {
-    echo -e "\e[46m[Vamplistic]\e[0m \e[100m[$CURRENT_STEP/$TOTAL_STEPS]\e[0m \e[35m$1...\e[0m"
+    echo -e "\e[46m[Vamplistic]\e[0m \e[100m[$CURRENT_STEP]\e[0m \e[35m$1...\e[0m"
     let "CURRENT_STEP += 1"
 }
 
@@ -43,30 +41,25 @@ function pkg_exists()
 }
 
 # Add a given Aptitude package name to the list of installed packages.
-function add_to_pkg_list()
+function add_to_pkg_log()
 {
     PKG_GIVEN=$1
-    PKG_FILE=$LOG_DIR/installed_pkgs.log
+    PKG_TYPE=$2
+    PKG_LOG=""
 
-    touch $PKG_FILE
-
-    PKG_IN_LIST=`grep "$PKG_GIVEN" "$PKG_FILE"`
-    if [ -z "$PKG_IN_LIST" ]; then
-        echo $PKG_GIVEN >> $PKG_FILE
+    if [ "$PKG_TYPE" == "apt" ]; then
+        PKG_LOG=$LOG_DIR/installed_pkgs.log
     fi
-}
 
-# Add a given package name to the list of install Ruby gems.
-function add_to_gem_list()
-{
-    PKG_GIVEN=$1
-    GEMS_FILE=$LOG_DIR/installed_ruby_gems.log
+    if [ "$PKG_TYPE" == "gem" ]; then
+        PKG_LOG=$LOG_DIR/installed_ruby_gems.log
+    fi
 
-    touch $GEMS_FILE
+    touch $PKG_LOG
 
-    PKG_IN_LIST=`grep "$PKG_GIVEN" "$GEMS_FILE"`
+    PKG_IN_LIST=`grep "$PKG_GIVEN" "$PKG_LOG"`
     if [ -z "$PKG_IN_LIST" ]; then
-        echo $PKG_GIVEN >> $GEMS_FILE
+        echo $PKG_GIVEN >> $PKG_LOG
     fi
 }
 
@@ -76,7 +69,7 @@ function install_pkg()
     PKG_GIVEN=$1
     PKG_ARGS=$2
 
-    add_to_pkg_list $PKG_GIVEN
+    add_to_pkg_log $PKG_GIVEN "apt"
 
     PKG_EXISTS=$(pkg_exists $PKG_GIVEN)
 
@@ -94,7 +87,7 @@ function install_ruby_gem()
 {
     PKG_GIVEN=$1
 
-    add_to_gem_list $PKG_GIVEN
+    add_to_pkg_list $PKG_GIVEN "gem"
 
     gem install $PKG_GIVEN
 }
@@ -105,8 +98,6 @@ function replace_token()
     TOKEN=$1
     REPLACE=$2
     FILE=$3
-
-    echo "[replace_token] $TOKEN | $REPLACE | $FILE"
 
     sed -i "s/{{$TOKEN}}/$REPLACE/g" $FILE
 }
@@ -124,16 +115,27 @@ if [ -e $LOG_DIR/installed_pkgs.log ]; then
     rm $LOG_DIR/installed_pkgs.log
 fi
 
+# Remove the package log if it exists
+if [ -e $LOG_DIR/installed_ruby_gems.log ]; then
+    rm $LOG_DIR/installed_ruby_gems.log
+fi
+
 # Configure the provisioner to operate without a command prompt.
 export DEBIAN_FRONTEND=noninteractive
 
 # Configure environment variables
 
-echo "VAMP_APP_DOMAIN: "$VAMP_APP_DOMAIN
+VAMP_WORKING_DOMAIN=""
+if [ "$VAMP_IS_DEV" == "true" ]; then
+    VAMP_WORKING_DOMAIN=$VAMP_APP_DEV_DOMAIN
+else
+    VAMP_WORKING_DOMAIN=$VAMP_APP_DOMAIN
+fi
+
+echo "VAMP_WORKING_DOMAIN: "$VAMP_WORKING_DOMAIN
 echo "VAMP_DB_USER: "$VAMP_DB_USER
 echo "VAMP_DB_PASS: "$VAMP_DB_PASS
 echo "VAMP_DB_NAME: "$VAMP_DB_NAME
-echo "VAMP_APP_DEV_DOMAIN: "$VAMP_APP_DEV_DOMAIN
 
 # Update Aptitude repositories.
 print_status "Optimizing Apt and updating package repositories"
@@ -176,14 +178,6 @@ install_pkg apache2-mpm-prefork
 a2enmod ssl
 a2enmod rewrite
 a2enmod mpm_prefork
-
-# Configure App
-VAMP_WORKING_DOMAIN=""
-if [ "$VAMP_IS_DEV" == "true" ]; then
-    VAMP_WORKING_DOMAIN=$VAMP_APP_DEV_DOMAIN
-else
-    VAMP_WORKING_DOMAIN=$VAMP_APP_DOMAIN
-fi
 
 VAMP_CERT_DIR="/etc/apache2/ssl"
 if [ ! -d "$VAMP_CERT_DIR" ]; then
@@ -298,19 +292,14 @@ print_status "Installing MariaDB"
 install_pkg mariadb-server '--force-yes'
 install_pkg mariadb-client '--force-yes'
 
-# Install Postfix or MailCatcher
-if [ "$VAMP_IS_DEV" == "false" ]; then
-    print_status "Installing Postfix"
+# Configure the database
+mysql -u $VAMP_DB_USER -p$VAMP_DB_PASS -e "CREATE DATABASE $VAMP_DB_NAME;"
+mysql -u $VAMP_DB_USER -p$VAMP_DB_PASS -e "GRANT ALL PRIVILEGES ON $VAMP_DB_NAME.* TO '$VAMP_DB_USER'@'%';"
 
-    install_pkg postfix
-    # TODO: Configure Postfix.
-else
-    print_status "Installing MailCatcher"
-
-    install_ruby_gem mailcatcher
-
-    mailcatcher --http-ip 0.0.0.0
-fi
+# Install MailCatcher
+print_status "Installing MailCatcher"
+install_ruby_gem mailcatcher
+mailcatcher --http-ip 0.0.0.0
 
 # Install XDebug
 print_status "Installing XDebug"
@@ -323,3 +312,8 @@ if [ "$VAMP_IS_DEV" == "true" ]; then
     fi
 fi
 service apache2 restart
+
+# Install Node.js
+print_status "Installing Node.js"
+install_pkg node
+install_pkg npm
