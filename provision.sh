@@ -87,7 +87,7 @@ function install_ruby_gem()
 {
     PKG_GIVEN=$1
 
-    add_to_pkg_list $PKG_GIVEN "gem"
+    add_to_pkg_log $PKG_GIVEN "gem"
 
     gem install $PKG_GIVEN
 }
