@@ -3,9 +3,9 @@
  _    _      ______  ______  _ _           _         
 | |  | |/\  |  ___ \(_____ \| (_)     _   (_)        
 | |  | /  \ | | _ | |_____) | |_  ___| |_  _  ____   
-\ \/ / /\ \| || || |  ____/| | |/___|  _)| |/ ___)   
- \  | |__| | || || | |     | | |___ | |__| ( (___    
-  \/|______|_||_||_|_|     |_|_(___/ \___|_|\____)   
+ \ \/ / /\ \| || || |  ____/| | |/___|  _)| |/ ___)   
+  \  | |__| | || || | |     | | |___ | |__| ( (___    
+   \/|______|_||_||_|_|     |_|_(___/ \___|_|\____)   
                                                      
 =====================================================
 Author: Matt Mumau <mpmumau@gmail.com> 
@@ -123,11 +123,18 @@ applications) access to that database.
 
 ## Xdebug
 
-## MailCatcher
+Xdebug will be installed in to match the PHP version you specify in the
+configuration file. Xdebug may be used to debug PHP execution in real time.
+Consult with the instructions for your IDE in order to configure your
+local system to accept requests from the Xdebug application.
 
-## Postfix
+## MailCatcher
+Mailcatcher will be installed in order to intercept mail sent with PHP, 
+which is useful for debugging the transmission of email through scripts.
+Mailcatcher is available via a browser at port `1080` at the domain of 
+your application.
 
 ## Node.js
-
-## Notes
-
+Node.js will be installed, as well as NPM, for the facilitation of
+front-end build scripts (e.g. gulp). Follow the instructions for building 
+your front-end application for more information.
