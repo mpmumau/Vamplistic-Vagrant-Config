@@ -3,7 +3,7 @@
 #
 # File: provision.sh
 #
-# This shell script provisions script the Vamplistic Vagrant VM.
+# This shell script provisions a Vamplistic Vagrant VM.
 #
 # Created: Sept. 1, 2017
 # Author: Matt Mumau <mpmumau@gmail.com>
