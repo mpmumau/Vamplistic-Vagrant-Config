@@ -4,3 +4,4 @@ env.sh
 config/apache2/*
 !config/apache2/000-default.conf
 logs/*
+logs/*.empty
