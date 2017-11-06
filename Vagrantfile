@@ -30,4 +30,6 @@ Vagrant.configure("2") do |config|
         s.path = "provision.sh"
         s.upload_path = "/tmp/vamplistic.sh"
     end
+
+    config.vm.provision :shell, path: "startup.sh", run: 'always'
 end

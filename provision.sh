@@ -252,6 +252,7 @@ if [ "$VAMP_PHP5_VS_7" == "true" ]; then
     install_pkg php5-mcrypt
     install_pkg php5-curl
     install_pkg php5-imagick
+    install_pkg php5-mysqli
     
     cp /vagrant/config/php/5.0/php.ini /etc/php5/apache2/php.ini
 else
@@ -265,6 +266,7 @@ else
     install_pkg php7.0-mcrypt
     install_pkg php7.0-curl
     install_pkg php7.0-imagick
+    install_pkg php7.0-mysqli
 
     cp /vagrant/config/php/7.0/php.ini /etc/php/7.0/apache2/php.ini
 

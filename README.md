@@ -19,8 +19,8 @@ License: MIT License (included in LICENSE file)
 A Vagrant configuration to boot up a simplistic Debian instance, with vanilla 
 Apache, PHP and MariaDB pre-installed and pre-configured. 
 
-Packages which may be installed additionally include XDebug, for debugging PHP
-code locally, Node.js for running build scripts and MailCatcher, for debugging 
+Packages which may be installed additionally include XDebug for debugging PHP
+code locally, Node.js for running build scripts and MailCatcher for debugging 
 email transmission locally.
 
 ## Configuration
@@ -33,7 +33,7 @@ These include:
 in various instances throughout the provisioning process.
 
 - `VAMP_APP_DOMAIN` This is the domain name for the application. Note that the 
-top-level domain (e.g. `.com`, `.net` or `.org`) for the applpication will be 
+top-level domain (e.g. `.com`, `.net` or `.org`) for the application will be 
 replaced by `.dev` on the local dev environment.
 
 - `VAMP_DB_USER` and `VAMP_DB_PASS` These are the MariaDB database credentials 
@@ -122,7 +122,6 @@ the provisioning phase in order to give PHP (and potentially other
 applications) access to that database.
 
 ## Xdebug
-
 Xdebug will be installed in to match the PHP version you specify in the
 configuration file. Xdebug may be used to debug PHP execution in real time.
 Consult with the instructions for your IDE in order to configure your
@@ -133,6 +132,7 @@ Mailcatcher will be installed in order to intercept mail sent with PHP,
 which is useful for debugging the transmission of email through scripts.
 Mailcatcher is available via a browser at port `1080` at the domain of 
 your application.
+
 
 ## Node.js
 Node.js will be installed, as well as NPM, for the facilitation of
